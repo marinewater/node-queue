@@ -1,0 +1,19 @@
+{
+  "name": "node-queue",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha test"
+  },
+  "author": "marinewater",
+  "license": "MIT",
+  "dependencies": {
+    "redis": "~0.12.1",
+    "bluebird": "~2.9.24"
+  },
+  "devDependencies": {
+    "mocha": "~2.2.4",
+    "sinon": "~1.14.1"
+  }
+}
