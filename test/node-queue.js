@@ -131,6 +131,35 @@ describe('node-redis', function() {
         });
     });
 
+    describe('countJobs', function() {
+        it('should return the number of jobs in the queue', function(done) {
+            var llenMock = {
+                llen: function () {},
+                on: function() {}
+            };
+            var mockClient = sinon.mock(llenMock);
+
+            mockClient.expects('llen').once().withArgs('ncsq:test-queue:jobs').yields(null, 2);
+            mockClient.expects('on');
+
+
+            var queue = new Queue({
+                redis_client: llenMock
+            });
+            queue.countJobs('test-queue').then(function(job_count) {
+                assert.deepEqual(job_count, 2);
+
+                mockClient.verify();
+                mockClient.restore();
+
+                done();
+            }).catch(function() {
+                mockClient.restore();
+                done("promise should not be rejected");
+            });
+        });
+    });
+
     describe('Queue', function() {
         it('should create a queue and change the prefix', function () {
             var redisMock = {
